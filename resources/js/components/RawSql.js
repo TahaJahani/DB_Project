@@ -3,7 +3,7 @@ import { Grid, TextField, Button, RadioGroup, FormControlLabel, Radio } from '@m
 
 const axios = require('axios');
 
-export default function RawSql({ setData, setHeaders }) {
+export default function RawSql({ setData, setHeaders, setError }) {
 
     const [sql, setSql] = React.useState('');
     const [type, setType] = React.useState('select');
@@ -18,6 +18,7 @@ export default function RawSql({ setData, setHeaders }) {
             setData(res.data.map((item, index) => ({ ...item, id: index })));
             setHeaders(Object.keys(res.data[0]).map(key => ({ field: key, headerName: key, flex: 1 })))
         }, (err) => {
+            setError(err.response.data.message);
             console.log(err.response);
         })
     }
@@ -36,7 +37,7 @@ export default function RawSql({ setData, setHeaders }) {
             <Grid item xs={12}>
                 <TextField
                     value={sql}
-                    onChange={(e) => setSql(e.target.value)}
+                    onChange={(e) => {setSql(e.target.value); setError('')}}
                     sx={{ width: '100%' }}
                     multiline
                     rows={4}

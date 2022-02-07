@@ -42475,7 +42475,8 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 
 function RawSql(_ref) {
   var setData = _ref.setData,
-      setHeaders = _ref.setHeaders;
+      setHeaders = _ref.setHeaders,
+      setError = _ref.setError;
 
   var _React$useState = react__WEBPACK_IMPORTED_MODULE_0__.useState(''),
       _React$useState2 = _slicedToArray(_React$useState, 2),
@@ -42507,6 +42508,7 @@ function RawSql(_ref) {
         };
       }));
     }, function (err) {
+      setError(err.response.data.message);
       console.log(err.response);
     });
   };
@@ -42539,7 +42541,8 @@ function RawSql(_ref) {
       children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(_mui_material__WEBPACK_IMPORTED_MODULE_6__["default"], {
         value: sql,
         onChange: function onChange(e) {
-          return setSql(e.target.value);
+          setSql(e.target.value);
+          setError('');
         },
         sx: {
           width: '100%'
@@ -42577,6 +42580,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ RawSqlPanel)
 /* harmony export */ });
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @mui/material */ "./node_modules/@mui/material/Typography/Typography.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var _DataTable__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./DataTable */ "./resources/js/components/DataTable.js");
 /* harmony import */ var _RawSql__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./RawSql */ "./resources/js/components/RawSql.js");
@@ -42598,6 +42602,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
+
 function RawSqlPanel() {
   var _React$useState = react__WEBPACK_IMPORTED_MODULE_0__.useState([]),
       _React$useState2 = _slicedToArray(_React$useState, 2),
@@ -42609,10 +42614,19 @@ function RawSqlPanel() {
       headers = _React$useState4[0],
       setHeaders = _React$useState4[1];
 
+  var _React$useState5 = react__WEBPACK_IMPORTED_MODULE_0__.useState(''),
+      _React$useState6 = _slicedToArray(_React$useState5, 2),
+      error = _React$useState6[0],
+      setError = _React$useState6[1];
+
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_RawSql__WEBPACK_IMPORTED_MODULE_2__["default"], {
       setData: setData,
-      setHeaders: setHeaders
+      setHeaders: setHeaders,
+      setError: setError
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_mui_material__WEBPACK_IMPORTED_MODULE_4__["default"], {
+      color: "error",
+      children: error
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_DataTable__WEBPACK_IMPORTED_MODULE_1__["default"], {
       data: data,
       headers: headers
