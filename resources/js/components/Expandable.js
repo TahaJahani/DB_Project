@@ -15,7 +15,7 @@ const ExpandMore = styled((props) => {
 export default function Expandable(props) {
 
     return (
-        <Card>
+        <Card sx={{my: 2, ...props.sx}}>
             <CardHeader
                 onClick={props.onExpand}
                 title={<Typography variant='h6'>

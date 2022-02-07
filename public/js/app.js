@@ -42149,10 +42149,21 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ BuildPanel)
 /* harmony export */ });
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @mui/material */ "./node_modules/@mui/material/TextField/TextField.js");
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @mui/material */ "./node_modules/@mui/material/Typography/Typography.js");
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @mui/material */ "./node_modules/@mui/material/Grid/Grid.js");
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @mui/material */ "./node_modules/@mui/material/TextField/TextField.js");
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @mui/material */ "./node_modules/@mui/material/MenuItem/MenuItem.js");
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @mui/material */ "./node_modules/@mui/material/Button/Button.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var _Expandable__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Expandable */ "./resources/js/components/Expandable.js");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var _DataTable__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./DataTable */ "./resources/js/components/DataTable.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -42169,21 +42180,320 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
-function BuildPanel() {
-  var _React$useState = react__WEBPACK_IMPORTED_MODULE_0__.useState(0),
-      _React$useState2 = _slicedToArray(_React$useState, 2),
-      step = _React$useState2[0],
-      setStep = _React$useState2[1];
 
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
-    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_Expandable__WEBPACK_IMPORTED_MODULE_1__["default"], {
+
+
+var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+
+function BuildPanel() {
+  var _React$useState = react__WEBPACK_IMPORTED_MODULE_0__.useState([]),
+      _React$useState2 = _slicedToArray(_React$useState, 2),
+      data = _React$useState2[0],
+      setData = _React$useState2[1];
+
+  var _React$useState3 = react__WEBPACK_IMPORTED_MODULE_0__.useState([]),
+      _React$useState4 = _slicedToArray(_React$useState3, 2),
+      headers = _React$useState4[0],
+      setHeaders = _React$useState4[1];
+
+  var _React$useState5 = react__WEBPACK_IMPORTED_MODULE_0__.useState(''),
+      _React$useState6 = _slicedToArray(_React$useState5, 2),
+      executedQuery = _React$useState6[0],
+      setExecutedQuery = _React$useState6[1];
+
+  var _React$useState7 = react__WEBPACK_IMPORTED_MODULE_0__.useState(0),
+      _React$useState8 = _slicedToArray(_React$useState7, 2),
+      step = _React$useState8[0],
+      setStep = _React$useState8[1];
+
+  var _React$useState9 = react__WEBPACK_IMPORTED_MODULE_0__.useState(),
+      _React$useState10 = _slicedToArray(_React$useState9, 2),
+      modelData = _React$useState10[0],
+      setModelData = _React$useState10[1];
+
+  var _React$useState11 = react__WEBPACK_IMPORTED_MODULE_0__.useState(''),
+      _React$useState12 = _slicedToArray(_React$useState11, 2),
+      writtenMethod = _React$useState12[0],
+      setWrittenMethod = _React$useState12[1];
+
+  var _React$useState13 = react__WEBPACK_IMPORTED_MODULE_0__.useState(''),
+      _React$useState14 = _slicedToArray(_React$useState13, 2),
+      writtenParams = _React$useState14[0],
+      setWrittenParams = _React$useState14[1];
+
+  var _React$useState15 = react__WEBPACK_IMPORTED_MODULE_0__.useState({
+    query_name: "",
+    query_params: '["*"]',
+    model: "",
+    methods: {}
+  }),
+      _React$useState16 = _slicedToArray(_React$useState15, 2),
+      req = _React$useState16[0],
+      setReq = _React$useState16[1];
+
+  var addMethosToReq = function addMethosToReq() {
+    var inputs = writtenParams.split(",");
+    setReq(_objectSpread(_objectSpread({}, req), {}, {
+      methods: _objectSpread(_objectSpread({}, req.methods), {}, _defineProperty({}, writtenMethod, inputs))
+    }));
+    setWrittenMethod('');
+    setWrittenParams('');
+  };
+
+  var buildrequest = function buildrequest() {
+    axios.post("http://localhost:8000/api/build", _objectSpread(_objectSpread({}, req), {}, {
+      query_params: JSON.parse(req.query_params)
+    })).then(function (res) {
+      var toShow = "Executed Query: \n ".concat(res.data.query[0].query, "\n\n With Params: \n ").concat(JSON.stringify(res.data.query[0].bindings));
+      setExecutedQuery(toShow);
+      setData(res.data.data.map(function (item, index) {
+        return _objectSpread(_objectSpread({}, item), {}, {
+          id: index
+        });
+      }));
+      setHeaders(Object.keys(res.data.data[0]).map(function (key) {
+        return {
+          field: key,
+          headerName: key,
+          flex: 1
+        };
+      }));
+    }, function (err) {
+      console.log(err.response);
+    });
+    setReq({
+      query_name: "",
+      query_params: ["*"],
+      model: "",
+      methods: {}
+    });
+    setStep(0);
+  };
+
+  react__WEBPACK_IMPORTED_MODULE_0__.useEffect(function () {
+    axios.get("http://localhost:8000/api/model-data").then(function (res) {
+      setModelData(res.data);
+    }, function (err) {
+      console.log(err.response);
+    });
+  }, []);
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_mui_material__WEBPACK_IMPORTED_MODULE_4__["default"], {
+      sx: {
+        my: 2
+      },
+      variant: "h6",
+      children: executedQuery
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_Expandable__WEBPACK_IMPORTED_MODULE_1__["default"], {
       title: "Query",
       expanded: step === 0,
       onExpand: function onExpand() {},
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_mui_material__WEBPACK_IMPORTED_MODULE_3__["default"], {
-        label: "Query"
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)(_mui_material__WEBPACK_IMPORTED_MODULE_5__["default"], {
+        container: true,
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_mui_material__WEBPACK_IMPORTED_MODULE_5__["default"], {
+          item: true,
+          xs: 6,
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)(_mui_material__WEBPACK_IMPORTED_MODULE_6__["default"], {
+            sx: {
+              width: "100%"
+            },
+            value: req.query_name,
+            onChange: function onChange(e) {
+              return setReq(_objectSpread(_objectSpread({}, req), {}, {
+                query_name: e.target.value
+              }));
+            },
+            label: "Query",
+            select: true,
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_mui_material__WEBPACK_IMPORTED_MODULE_7__["default"], {
+              value: "select",
+              children: "select"
+            }, "select"), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_mui_material__WEBPACK_IMPORTED_MODULE_7__["default"], {
+              value: "update",
+              children: "update"
+            }, "update"), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_mui_material__WEBPACK_IMPORTED_MODULE_7__["default"], {
+              value: "insert",
+              children: "insert"
+            }, "insert"), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_mui_material__WEBPACK_IMPORTED_MODULE_7__["default"], {
+              value: "delete",
+              children: "delete"
+            }, "delete")]
+          })
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_mui_material__WEBPACK_IMPORTED_MODULE_5__["default"], {
+          item: true,
+          xs: 1,
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_mui_material__WEBPACK_IMPORTED_MODULE_8__["default"], {
+            variant: "outlined",
+            onClick: function onClick() {
+              return setStep(1);
+            },
+            children: "Submit"
+          })
+        })]
       })
-    })
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_Expandable__WEBPACK_IMPORTED_MODULE_1__["default"], {
+      title: "Model Name",
+      expanded: step === 1,
+      onExpand: function onExpand() {},
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)(_mui_material__WEBPACK_IMPORTED_MODULE_5__["default"], {
+        container: true,
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_mui_material__WEBPACK_IMPORTED_MODULE_5__["default"], {
+          item: true,
+          xs: 6,
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_mui_material__WEBPACK_IMPORTED_MODULE_6__["default"], {
+            sx: {
+              width: "100%"
+            },
+            value: req.model,
+            onChange: function onChange(e) {
+              return setReq(_objectSpread(_objectSpread({}, req), {}, {
+                model: e.target.value
+              }));
+            },
+            label: "Model",
+            select: true,
+            children: modelData && Object.keys(modelData).map(function (item) {
+              return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_mui_material__WEBPACK_IMPORTED_MODULE_7__["default"], {
+                value: item,
+                children: item
+              }, item);
+            })
+          })
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_mui_material__WEBPACK_IMPORTED_MODULE_5__["default"], {
+          item: true,
+          xs: 1,
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_mui_material__WEBPACK_IMPORTED_MODULE_8__["default"], {
+            variant: "outlined",
+            onClick: function onClick() {
+              return setStep(2);
+            },
+            children: "Submit"
+          })
+        })]
+      })
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_Expandable__WEBPACK_IMPORTED_MODULE_1__["default"], {
+      title: "Query Params",
+      expanded: step === 2,
+      onExpand: function onExpand() {},
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)(_mui_material__WEBPACK_IMPORTED_MODULE_5__["default"], {
+        container: true,
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_mui_material__WEBPACK_IMPORTED_MODULE_5__["default"], {
+          item: true,
+          xs: 6,
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_mui_material__WEBPACK_IMPORTED_MODULE_6__["default"], {
+            sx: {
+              width: "100%"
+            },
+            value: req.query_params,
+            onChange: function onChange(e) {
+              return setReq(_objectSpread(_objectSpread({}, req), {}, {
+                query_params: e.target.value
+              }));
+            },
+            label: "Query Params"
+          })
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_mui_material__WEBPACK_IMPORTED_MODULE_5__["default"], {
+          item: true,
+          xs: 1,
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_mui_material__WEBPACK_IMPORTED_MODULE_8__["default"], {
+            variant: "outlined",
+            onClick: function onClick() {
+              return setStep(3);
+            },
+            children: "Submit"
+          })
+        })]
+      })
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)(_Expandable__WEBPACK_IMPORTED_MODULE_1__["default"], {
+      title: "Methods",
+      expanded: step === 3,
+      onExpand: function onExpand() {},
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)(_mui_material__WEBPACK_IMPORTED_MODULE_5__["default"], {
+        container: true,
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_mui_material__WEBPACK_IMPORTED_MODULE_5__["default"], {
+          item: true,
+          xs: 4,
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)(_mui_material__WEBPACK_IMPORTED_MODULE_6__["default"], {
+            sx: {
+              width: "100%"
+            },
+            value: writtenMethod,
+            onChange: function onChange(e) {
+              return setWrittenMethod(e.target.value);
+            },
+            label: "Query Params",
+            select: true,
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_mui_material__WEBPACK_IMPORTED_MODULE_7__["default"], {
+              value: "distinct",
+              children: "distinct"
+            }, "distinct"), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_mui_material__WEBPACK_IMPORTED_MODULE_7__["default"], {
+              value: "join",
+              children: "inner join"
+            }, "join"), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_mui_material__WEBPACK_IMPORTED_MODULE_7__["default"], {
+              value: "leftJoin",
+              children: "left join"
+            }, "leftJoin"), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_mui_material__WEBPACK_IMPORTED_MODULE_7__["default"], {
+              value: "rightJoin",
+              children: "right join"
+            }, "rightJoin"), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_mui_material__WEBPACK_IMPORTED_MODULE_7__["default"], {
+              value: "where",
+              children: "where"
+            }, "where"), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_mui_material__WEBPACK_IMPORTED_MODULE_7__["default"], {
+              value: "orWhere",
+              children: "or where"
+            }, "orWhere"), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_mui_material__WEBPACK_IMPORTED_MODULE_7__["default"], {
+              value: "orderBy",
+              children: "order by"
+            }, "orderBy"), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_mui_material__WEBPACK_IMPORTED_MODULE_7__["default"], {
+              value: "groupBy",
+              children: "group by"
+            }, "groupBy"), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_mui_material__WEBPACK_IMPORTED_MODULE_7__["default"], {
+              value: "having",
+              children: "having"
+            }, "having")]
+          })
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_mui_material__WEBPACK_IMPORTED_MODULE_5__["default"], {
+          item: true,
+          xs: 4,
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_mui_material__WEBPACK_IMPORTED_MODULE_6__["default"], {
+            sx: {
+              width: "100%"
+            },
+            value: writtenParams,
+            onChange: function onChange(e) {
+              return setWrittenParams(e.target.value);
+            },
+            label: "Inputs"
+          })
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_mui_material__WEBPACK_IMPORTED_MODULE_5__["default"], {
+          item: true,
+          xs: 1,
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_mui_material__WEBPACK_IMPORTED_MODULE_8__["default"], {
+            variant: "outlined",
+            onClick: addMethosToReq,
+            children: "Add Method"
+          })
+        })]
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_mui_material__WEBPACK_IMPORTED_MODULE_5__["default"], {
+        container: true,
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_mui_material__WEBPACK_IMPORTED_MODULE_4__["default"], {
+          children: JSON.stringify(req.methods)
+        })
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_mui_material__WEBPACK_IMPORTED_MODULE_5__["default"], {
+        container: true,
+        sx: {
+          my: 2
+        },
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_mui_material__WEBPACK_IMPORTED_MODULE_8__["default"], {
+          variant: "contained",
+          onClick: buildrequest,
+          children: "Execute"
+        })
+      })]
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_DataTable__WEBPACK_IMPORTED_MODULE_2__["default"], {
+      data: data,
+      headers: headers
+    })]
   });
 }
 
@@ -42283,6 +42593,9 @@ var ExpandMore = (0,_mui_material_styles__WEBPACK_IMPORTED_MODULE_2__["default"]
 });
 function Expandable(props) {
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)(_mui_material__WEBPACK_IMPORTED_MODULE_4__["default"], {
+    sx: _objectSpread({
+      my: 2
+    }, props.sx),
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(_mui_material__WEBPACK_IMPORTED_MODULE_5__["default"], {
       onClick: props.onExpand,
       title: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(_mui_material__WEBPACK_IMPORTED_MODULE_6__["default"], {
